@@ -42,9 +42,19 @@
 
         }
 
-        public override void StateTick()
+        protected override RandomAnimalAction[] AllPossibleRandomAnimalActions { get; set; } =
         {
-            base.StateTick();
-        }
+            RandomAnimalAction.None,
+            RandomAnimalAction.None,
+            RandomAnimalAction.None,
+            RandomAnimalAction.None,
+            RandomAnimalAction.None,
+            RandomAnimalAction.None,
+
+            RandomAnimalAction.PlayWithCongener,
+            RandomAnimalAction.PlayWithCongener,
+
+            RandomAnimalAction.PlayWithAnotherAnimal
+        };
     }
 }

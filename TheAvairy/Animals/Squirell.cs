@@ -1,13 +1,19 @@
-﻿namespace TheAvairy
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TheAvairy
 {
-    internal class Hedgehog : Animal
+    internal class Squirell : Animal
     {
-        public override AnimalType AnimalType { get; } = AnimalType.Hedgehog;
-        protected override float MaxAge { get; } = 5.00f;
+        public override AnimalType AnimalType { get; } = AnimalType.Squirell;
+        protected override float MaxAge { get; } = 13.00f;
         protected override bool IsLittle { get; } = true;
         protected override bool IsPossibleToHoldItems { get; } = false;
 
-        public Hedgehog(string Name, int MonthOfBirth, int WeekOfBirth, int CurrentAge, AvairyManager manager) :
+        public Squirell(string Name, int MonthOfBirth, int WeekOfBirth, int CurrentAge, AvairyManager manager) :
             base(Name, MonthOfBirth, WeekOfBirth, manager)
         {
 
@@ -15,6 +21,8 @@
 
         protected override RandomAnimalState[] AllPossibleRandomAnimalStates { get; set; } =
         {
+            RandomAnimalState.None,
+            RandomAnimalState.None,
             RandomAnimalState.None,
             RandomAnimalState.None,
             RandomAnimalState.None,
@@ -42,9 +50,19 @@
             RandomAnimalState.Returned,
         };
 
-        public override void StateTick()
+        protected override RandomAnimalAction[] AllPossibleRandomAnimalActions { get; set; } =
         {
-            base.StateTick();
-        }
+            RandomAnimalAction.None,
+            RandomAnimalAction.None,
+            RandomAnimalAction.None,
+            RandomAnimalAction.None,
+            RandomAnimalAction.None,
+            RandomAnimalAction.None,
+
+            RandomAnimalAction.PlayWithCongener,
+            RandomAnimalAction.PlayWithCongener,
+
+            RandomAnimalAction.PlayWithAnotherAnimal
+        };
     }
 }

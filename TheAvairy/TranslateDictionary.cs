@@ -2,25 +2,24 @@
 {
     internal class TranslateDictionary
     {
-        private readonly Dictionary<string, string> InnerDictionary = new Dictionary<string, string>
+        private static readonly Dictionary<string, string> InnerDictionary = new Dictionary<string, string>
         {
-            { "None", "Ніхто" },
-            { "Gorilla", "Горила" },
-            { "Cat", "Кіт" },
-            { "Hedgehog", "Їжак" },
-            { "Squirell", "Білка" },
+            { "none", "Ніхто" },
+            { "gorilla", "Горила" },
+            { "cat", "Кіт" },
+            { "hedgehog", "Їжак" },
+            { "squirell", "Білка" },
         };
 
-        // TODO:
-        // Переводы
-        // Записи в NoteManager
-        // Проверить, работают ли состояния на данный момент
-
-        public string this[string i]
+        public static string Translate(string key)
         {
-            get
+            try
             {
-                return InnerDictionary[i];
+                return InnerDictionary[key];
+            }
+            catch
+            {
+                return key;
             }
         }
     }

@@ -35,18 +35,26 @@
             RandomAnimalState.WellFed,
             RandomAnimalState.WellFed,
 
-            RandomAnimalState.Escaped,
-            RandomAnimalState.Escaped,
-            RandomAnimalState.Returned,
-
             RandomAnimalState.TookNut,
             RandomAnimalState.TookNut,
             RandomAnimalState.TookNut,
         };
-
-        public override void StateTick()
+        protected override RandomAnimalAction[] AllPossibleRandomAnimalActions { get; set; } =
         {
-            base.StateTick();
-        }
+            RandomAnimalAction.None,
+            RandomAnimalAction.None,
+            RandomAnimalAction.None,
+
+            RandomAnimalAction.PetSquirell,
+            RandomAnimalAction.PetSquirell,
+
+            RandomAnimalAction.PetHedgehog,
+
+            RandomAnimalAction.PetCat,
+
+            RandomAnimalAction.PlayWithCongener,
+
+            RandomAnimalAction.PlayWithAnotherAnimal
+        };
     }
 }
