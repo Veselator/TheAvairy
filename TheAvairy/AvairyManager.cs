@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.Metrics;
+using System.Text;
 
 namespace TheAvairy
 {
@@ -16,8 +17,9 @@ namespace TheAvairy
         public SomebodyDiedHandler SomebodyDied;
 
         private bool IsAnybodyLeft = true;
+        private int NumOfDeath = 0;
 
-        public AvairyManager() 
+        public AvairyManager()
         {
             AddAnimals( 
                 new Gorilla("Дора", 6, 3, 24, this),
@@ -25,11 +27,18 @@ namespace TheAvairy
                 new Hedgehog("Сонік", 10, 2, 3, this),
                 new Cat("Василій", 5, 1, 8, this)
             );
+            InitDelegates();
         }
 
         public AvairyManager(params Animal[] newAnimals)
         {
             AddAnimals(newAnimals);
+            InitDelegates();
+        }
+
+        private void InitDelegates()
+        {
+            SomebodyDied += () => NumOfDeath++;
         }
 
         private void AddAnimals(params Animal[] newAnimals)
@@ -50,10 +59,21 @@ namespace TheAvairy
 
         private void AnimalsStates()
         {
+            bool IsAnybodyTicked = false;
             // Те, із чим звірята входять в день
             for (int i = 0; i < count; i++)
             {
-                if (!animals[i].IsDead) animals[i].StateTick();
+                if (!animals[i].IsDead)
+                {
+                    IsAnybodyTicked = true;
+                    animals[i].StateTick();
+                }
+            }
+
+            if (!IsAnybodyTicked)
+            {
+                NoteManager.AddNote($" Симуляція зупинена. Причина: смерть всіх тварин.");
+                IsAnybodyLeft = false;
             }
         }
 
@@ -68,8 +88,9 @@ namespace TheAvairy
 
         private void SystemTick()
         {
-            GlobalEvents();
+            //GlobalEvents();
             AnimalsStates();
+            if (!IsAnybodyLeft) return;
 
             AnimalActions();
             tick++;
@@ -105,6 +126,37 @@ namespace TheAvairy
             return null;
         }
 
+        private string GenerateHapinnesReport()
+        {
+            StringBuilder outputString = new StringBuilder("\n Поточні показники щастя:\n");
+
+            for (int i = 0; i < count; i++)
+            {
+                if (!animals[i].IsEscaped && !animals[i].IsDead)
+                {
+                    outputString.AppendLine($"    {animals[i].AnimalTypeTranslated} {animals[i].Name} - {animals[i].HappinessFactor,4:f}");
+                }
+            }
+
+            return outputString.ToString();
+        }
+
+        private string GenerateEndStatistics()
+        {
+            StringBuilder outputString = new StringBuilder("\n Статистика:\n");
+
+            outputString.AppendLine($"    Кількість смертей: {NumOfDeath}");
+
+            return outputString.ToString();
+        }
+
+        private string GenerateStartAnimalInfo()
+        {
+            // TODO:
+            // Статистика
+            // Правки баланса
+        }
+
         public void StartSimulation(int NumberOfTicks = 49, int StartingYear = 2025)
         {
             int i;
@@ -118,7 +170,10 @@ namespace TheAvairy
             {
                 NoteManager.AddNote($"\n ~~~~  Рік {StartingYear + CurrentYear}, місяць {CurrentMonth}, тиждень {CurrentWeek}  ~~~~ \n");
                 SystemTick();
+                if (!IsAnybodyLeft) break;
+                NoteManager.AddNote(GenerateHapinnesReport());
             }
+            NoteManager.AddNote(GenerateEndStatistics());
 
             Console.WriteLine(NoteManager.AllNotes);
             NoteManager.SaveToFile();

@@ -32,6 +32,7 @@
             RandomAnimalState.Escaped,
             RandomAnimalState.Escaped,
             RandomAnimalState.Returned,
+            RandomAnimalState.Returned,
 
             RandomAnimalState.Shedding,
         };

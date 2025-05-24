@@ -33,8 +33,9 @@ namespace TheAvairy
         public float HappinessFactor
         {
             get => happinessFactor;
-            set => happinessFactor = Math.Clamp(value, 0.00000f, 1.00000f);
+            set => happinessFactor = Math.Clamp(value, 0.0000f, 1.0000f);
         }
+
         public RandomAnimalState CurrentState { get; set; }
         public bool IsDead { get; private set; } = false;
         public bool IsEscaped { get; private set; } = false;
@@ -47,8 +48,8 @@ namespace TheAvairy
         private static float LogarithmMultiplier = 3.35f;
 
         // Константи, винесені в окремі поля
-        public const float DeathEventDebuff = 0.32f;
-        public const float EverydayHappinessIncome = 0.13f;
+        public const float DeathEventDebuff = 0.42f;
+        public const float EverydayHappinessIncome = 0.1f;
         private const int MonthsPerYear = 48;
 
         public Animal() : this("TestName", 7, 4)
@@ -220,20 +221,20 @@ namespace TheAvairy
                 if (SomeSquirell == null)
                 {
                     NoteManager.AddNote($" {AnimalTypeTranslated} {Name} сумна. Вона хотіла полгадити білку, але білки у вольєрі немає!");
-                    happinessFactor -= 0.15f;
+                    HappinessFactor -= 0.15f;
                     return;
                 }
 
                 if (IsNutTaken)
                 {
                     IsNutTaken = false;
-                    happinessFactor += 0.12f;
-                    SomeSquirell.happinessFactor += 0.12f;
+                    HappinessFactor += 0.12f;
+                    SomeSquirell.HappinessFactor += 0.12f;
                     NoteManager.AddNote($" {AnimalTypeTranslated} {Name} весела! Вона дала білці горішок і та дозволила погладити її!");
                     return;
                 }
 
-                happinessFactor -= 0.15f;
+                HappinessFactor -= 0.15f;
                 NoteManager.AddNote($" {AnimalTypeTranslated} {Name} сумна - білка не дала себе погладити. Можливо, їй треба щось дати щоб вона дозволила себе погладити?");
             }
             else if (currentAction == RandomAnimalAction.PetHedgehog && IsPossibleToHoldItems)
@@ -242,25 +243,25 @@ namespace TheAvairy
                 if (SomeHedgehog == null)
                 {
                     NoteManager.AddNote($" {AnimalTypeTranslated} {Name} сумна. Вона хотіла полгадити їжака, але у вольєрі немає їжаків!");
-                    happinessFactor -= 0.19f;
+                    HappinessFactor -= 0.19f;
                     return;
                 }
 
-                if (SomeHedgehog.happinessFactor > 0.2f && SomeHedgehog.happinessFactor < 0.5f)
+                if (SomeHedgehog.HappinessFactor > 0.2f && SomeHedgehog.HappinessFactor < 0.5f)
                 {
                     NoteManager.AddNote($" {AnimalTypeTranslated} {Name} сумна. Вона хотіла полгадити їжака, але він не захотів цього через поганий настрій!");
-                    happinessFactor -= 0.18f;
+                    HappinessFactor -= 0.18f;
                     return;
                 }
-                else if (SomeHedgehog.happinessFactor < 0.2f)
+                else if (SomeHedgehog.HappinessFactor < 0.2f)
                 {
                     NoteManager.AddNote($" {AnimalTypeTranslated} {Name} дуже сумна. Вона спробувала полгадити їжака, але він поколов її своїми колючками!");
-                    happinessFactor -= 0.23f;
+                    HappinessFactor -= 0.23f;
                     return;
                 }
 
-                happinessFactor += 0.18f;
-                SomeHedgehog.happinessFactor += 0.1f;
+                HappinessFactor += 0.18f;
+                SomeHedgehog.HappinessFactor += 0.1f;
                 NoteManager.AddNote($" {AnimalTypeTranslated} {Name} погладила їжака, який навіть поколов її свої колючки!");
             }
             else if (currentAction == RandomAnimalAction.PetCat && IsPossibleToHoldItems)
@@ -269,12 +270,12 @@ namespace TheAvairy
                 if (SomeCat == null)
                 {
                     NoteManager.AddNote($" {AnimalTypeTranslated} {Name} сумна. Вона хотіла полгадити кота, але у вольєрі немає котів!");
-                    happinessFactor -= 0.11f;
+                    HappinessFactor -= 0.11f;
                     return;
                 }
 
-                happinessFactor += 0.12f;
-                SomeCat.happinessFactor += 0.12f;
+                HappinessFactor += 0.12f;
+                SomeCat.HappinessFactor += 0.12f;
                 NoteManager.AddNote($" {AnimalTypeTranslated} {Name} весела - вона погладила кошеня!");
             }
             else if (currentAction == RandomAnimalAction.PlayWithCongener)
@@ -283,12 +284,12 @@ namespace TheAvairy
                 if (Congener == null)
                 {
                     NoteManager.AddNote($" {AnimalTypeTranslated} {Name} сумна. Вона хотіла пограти із родичем, але таких у вольєрі немає!");
-                    happinessFactor -= 0.12f;
+                    HappinessFactor -= 0.12f;
                     return;
                 }
 
-                happinessFactor += 0.12f;
-                Congener.happinessFactor += 0.12f;
+                HappinessFactor += 0.12f;
+                Congener.HappinessFactor += 0.12f;
                 NoteManager.AddNote($" {AnimalTypeTranslated} {Name} весела - вона пограла із родичем!");
             }
             else if (currentAction == RandomAnimalAction.PlayWithAnotherAnimal)
@@ -297,12 +298,12 @@ namespace TheAvairy
                 if (AnotherAnimal == null)
                 {
                     NoteManager.AddNote($" {AnimalTypeTranslated} {Name} сумна. Вона хотіла пограти із кимось, але у вольєрі тільки вона!");
-                    happinessFactor -= 0.1f;
+                    HappinessFactor -= 0.1f;
                     return;
                 }
 
-                happinessFactor += 0.1f;
-                AnotherAnimal.happinessFactor += 0.1f;
+                HappinessFactor += 0.1f;
+                AnotherAnimal.HappinessFactor += 0.1f;
                 NoteManager.AddNote($" {AnimalTypeTranslated} {Name} весела - вона пограла із {AnotherAnimal.AnimalTypeTranslated} {AnotherAnimal.Name}!");
             }
         }

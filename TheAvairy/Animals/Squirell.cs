@@ -45,8 +45,7 @@ namespace TheAvairy
 
             RandomAnimalState.Escaped,
             RandomAnimalState.Escaped,
-            RandomAnimalState.Escaped,
-            RandomAnimalState.Escaped,
+            RandomAnimalState.Returned,
             RandomAnimalState.Returned,
         };
 
