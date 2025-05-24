@@ -1,17 +1,11 @@
 ﻿namespace TheAvairy
 {
-    internal class Gorilla : Animal
+    internal class Cat : Animal
     {
-        public override AnimalType AnimalType { get; } = AnimalType.Gorilla;
-        protected override float MaxAge { get; } = 50.00f;
-        protected override bool IsLittle { get; } = false;
-        protected override bool IsPossibleToHoldItems { get; } = true;
-
-        public Gorilla(string Name, int MonthOfBirth, int WeekOfBirth, int CurrentAge, AvairyManager manager) :
-            base(Name, MonthOfBirth, WeekOfBirth, manager)
-        {
-
-        }
+        public override AnimalType AnimalType { get; } = AnimalType.Cat;
+        protected override float MaxAge { get; } = 20.00f;
+        protected override bool IsLittle { get; } = true;
+        protected override bool IsPossibleToHoldItems { get; } = false;
         protected override RandomAnimalState[] AllPossibleRandomAnimalStates { get; set; } =
         {
             RandomAnimalState.None,
@@ -39,10 +33,14 @@
             RandomAnimalState.Escaped,
             RandomAnimalState.Returned,
 
-            RandomAnimalState.TookNut,
-            RandomAnimalState.TookNut,
-            RandomAnimalState.TookNut,
+            RandomAnimalState.Shedding,
         };
+
+        public Cat(string Name, int MonthOfBirth, int WeekOfBirth, int CurrentAge, AvairyManager manager) :
+            base(Name, MonthOfBirth, WeekOfBirth, manager)
+        {
+
+        }
 
         public override void StateTick()
         {

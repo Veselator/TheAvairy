@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TheAvairy
 {
-    public enum AnimalType
+    internal enum AnimalType
     {
         None,
         Gorilla,
