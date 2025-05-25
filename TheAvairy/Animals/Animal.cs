@@ -165,7 +165,7 @@ namespace TheAvairy
             else if (CurrentState == RandomAnimalState.Hungry)
             {
                 NoteManager.AddNote($" {AnimalTypeTranslated} {Name} голодає!");
-                HappinessFactor -= 0.12f;
+                HappinessFactor -= 0.32f;
             }
             else if (CurrentState == RandomAnimalState.BadMood)
             {
@@ -184,7 +184,7 @@ namespace TheAvairy
             }
             else if (CurrentState == RandomAnimalState.Escaped && !IsEscaped)
             {
-                NoteManager.AddNote($" {AnimalTypeTranslated} {Name} втекла з вольєру! Надіємось, вона скоро повернеться");
+                NoteManager.AddNote($" {AnimalTypeTranslated} {Name} втекла з вольєру! Надіємось, вона скоро повернеться.");
                 IsEscaped = true;
             }
             else if (CurrentState == RandomAnimalState.Returned && IsEscaped)
