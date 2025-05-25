@@ -222,7 +222,7 @@ namespace TheAvairy
             return string.Join("\n", result);
         }
 
-        public void StartSimulation(int NumberOfTicks = 1000, int StartingYear = 2025)
+        public void StartSimulation(int NumberOfTicks = 100, int StartingYear = 2025)
         {
             int i;
 
