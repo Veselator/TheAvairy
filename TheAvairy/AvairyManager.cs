@@ -150,21 +150,90 @@ namespace TheAvairy
             return outputString.ToString();
         }
 
-        private string GenerateStartAnimalInfo()
+        public static string GenerateGraph(float[] inputArray, int step = 2)
         {
-            // TODO:
-            // Статистика
-            // Правки баланса
+            if (inputArray == null || inputArray.Length == 0)
+                return string.Empty;
+
+            // Найдем максимальное значение для масштабирования
+            float maxValue = inputArray.Max();
+            if (maxValue == 0) maxValue = 1; // избегаем деления на ноль
+
+            int graphHeight = 10; // высота графика в строках
+            int graphWidth = inputArray.Length;
+
+            var result = new List<string>();
+
+            // Создаем график сверху вниз
+            for (int row = graphHeight; row >= 1; row--)
+            {
+                string line = "";
+
+                // Добавляем процентную метку
+                if (row == graphHeight || row == graphHeight * 4 / 5 ||
+                    row == graphHeight * 3 / 5 || row == graphHeight * 2 / 5 || row == 1)
+                {
+                    int percent = (int)((float)row / graphHeight * 100);
+                    line += $"{percent,3}% |";
+                }
+                else
+                {
+                    line += "     |";
+                }
+
+                // Добавляем столбцы графика
+                for (int col = 0; col < inputArray.Length; col++)
+                {
+                    float normalizedValue = inputArray[col] / maxValue;
+                    int columnHeight = (int)(normalizedValue * graphHeight);
+
+                    if (columnHeight >= row)
+                    {
+                        line += " ###";
+                    }
+                    else
+                    {
+                        line += "    ";
+                    }
+                }
+
+                result.Add(line);
+            }
+
+            // Добавляем нижнюю границу
+            string bottomLine = "     *";
+            for (int i = 0; i < inputArray.Length; i++)
+            {
+                bottomLine += "----";
+            }
+            result.Add(bottomLine);
+
+            // Добавляем числовые метки снизу
+            string numbersLine = "      ";
+            for (int i = 0; i < inputArray.Length; i++)
+            {
+                if (i % step == 0)
+                {
+                    numbersLine += $"{i,3} ";
+                }
+                else
+                {
+                    numbersLine += "    ";
+                }
+            }
+            result.Add(numbersLine);
+
+            return string.Join("\n", result);
         }
 
         public void StartSimulation(int NumberOfTicks = 49, int StartingYear = 2025)
         {
             int i;
 
-            //for (i = 0; i < count; i++)
-            //{
-            //    NoteManager.AddNote(animals[i].ToString());
-            //}
+            for (i = 0; i < count; i++)
+            {
+                NoteManager.AddNote($"\n {animals[i].AnimalTypeTranslated} {animals[i].Name} - графік вирогідностей вмерти:\n" + GenerateGraph(animals[i].DieFactors));
+            }
 
             for (i = 0; i < NumberOfTicks; i++)
             {

@@ -26,7 +26,7 @@ namespace TheAvairy
         protected abstract RandomAnimalAction[] AllPossibleRandomAnimalActions { get; set; }
         protected RandomAnimalState[] RandomAnimalStates { get; set; }
         protected RandomAnimalAction[] RandomAnimalActions { get; set; }
-        protected float[] DieFactors;
+        public float[] DieFactors { get; private set;  }
 
         // Важливі змінні щодо поточного стану
         protected float happinessFactor;
