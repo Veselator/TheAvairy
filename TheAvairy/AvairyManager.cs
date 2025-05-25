@@ -155,21 +155,18 @@ namespace TheAvairy
             if (inputArray == null || inputArray.Length == 0)
                 return string.Empty;
 
-            // Найдем максимальное значение для масштабирования
             float maxValue = inputArray.Max();
-            if (maxValue == 0) maxValue = 1; // избегаем деления на ноль
+            if (maxValue == 0) maxValue = 1;
 
-            int graphHeight = 10; // высота графика в строках
+            int graphHeight = 10;
             int graphWidth = inputArray.Length;
 
             var result = new List<string>();
 
-            // Создаем график сверху вниз
             for (int row = graphHeight; row >= 1; row--)
             {
-                string line = "";
+                string line = " ";
 
-                // Добавляем процентную метку
                 if (row == graphHeight || row == graphHeight * 4 / 5 ||
                     row == graphHeight * 3 / 5 || row == graphHeight * 2 / 5 || row == 1)
                 {
@@ -181,7 +178,6 @@ namespace TheAvairy
                     line += "     |";
                 }
 
-                // Добавляем столбцы графика
                 for (int col = 0; col < inputArray.Length; col++)
                 {
                     float normalizedValue = inputArray[col] / maxValue;
@@ -200,16 +196,14 @@ namespace TheAvairy
                 result.Add(line);
             }
 
-            // Добавляем нижнюю границу
-            string bottomLine = "     *";
+            string bottomLine = "      *";
             for (int i = 0; i < inputArray.Length; i++)
             {
                 bottomLine += "----";
             }
             result.Add(bottomLine);
 
-            // Добавляем числовые метки снизу
-            string numbersLine = "      ";
+            string numbersLine = "       ";
             for (int i = 0; i < inputArray.Length; i++)
             {
                 if (i % step == 0)
@@ -232,7 +226,7 @@ namespace TheAvairy
 
             for (i = 0; i < count; i++)
             {
-                NoteManager.AddNote($"\n {animals[i].AnimalTypeTranslated} {animals[i].Name} - графік вирогідностей вмерти:\n" + GenerateGraph(animals[i].DieFactors));
+                NoteManager.AddNote($"\n {animals[i].AnimalTypeTranslated} {animals[i].Name} - графік вирогідностей вмерти:\n\n" + GenerateGraph(animals[i].DieFactors));
             }
 
             for (i = 0; i < NumberOfTicks; i++)
