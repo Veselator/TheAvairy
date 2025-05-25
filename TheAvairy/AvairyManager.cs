@@ -5,7 +5,7 @@ namespace TheAvairy
 {
     internal class AvairyManager
     {
-        private Animal[] animals = new Animal[64];
+        private Animal[] animals = new Animal[32];
         private int count = 0;
 
         public int tick { get; private set; } = 0; // 1 тік = 1 тиждень
@@ -43,10 +43,12 @@ namespace TheAvairy
 
         private void AddAnimals(params Animal[] newAnimals)
         {
+            int currentIndex;
             for (int i = 0; i < newAnimals.Length; i++)
             {
                 animals[count] = newAnimals[i];
-                SomebodyDied += () => newAnimals[i].HappinessFactor -= Animal.DeathEventDebuff;
+                currentIndex = count;
+                SomebodyDied += () => animals[currentIndex].HappinessFactor -= Animal.DeathEventDebuff;
                 animals[count].UID = count;
                 count++;
             }
@@ -220,7 +222,7 @@ namespace TheAvairy
             return string.Join("\n", result);
         }
 
-        public void StartSimulation(int NumberOfTicks = 49, int StartingYear = 2025)
+        public void StartSimulation(int NumberOfTicks = 1000, int StartingYear = 2025)
         {
             int i;
 

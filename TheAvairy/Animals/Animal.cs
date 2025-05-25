@@ -29,7 +29,7 @@ namespace TheAvairy
         public float[] DieFactors { get; private set;  }
 
         // Важливі змінні щодо поточного стану
-        protected float happinessFactor;
+        protected float happinessFactor = 0.5f;
         public float HappinessFactor
         {
             get => happinessFactor;
@@ -64,8 +64,6 @@ namespace TheAvairy
             this.WeekOfBirth = WeekOfBirth;
             this.manager = manager;
             AnimalTypeTranslated = TranslateDictionary.Translate(AnimalType.ToString().ToLower());
-
-            HappinessFactor = 0.5f;
 
             GenerateDieFactors();
             GenerateRandomStates();
