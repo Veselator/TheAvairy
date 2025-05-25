@@ -1,6 +1,4 @@
-﻿using System.CodeDom.Compiler;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
+﻿using System.Text;
 
 namespace TheAvairy
 {
@@ -48,8 +46,8 @@ namespace TheAvairy
         private static float LogarithmMultiplier = 3.35f;
 
         // Константи, винесені в окремі поля
-        public const float DeathEventDebuff = 0.42f;
-        public const float EverydayHappinessIncome = 0.1f;
+        public const float DeathEventDebuff = 0.62f;
+        public const float EverydayHappinessIncome = 0.07f;
         private const int MonthsPerYear = 48;
 
         public Animal() : this("TestName", 7, 4)
